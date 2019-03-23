@@ -20,12 +20,15 @@ router.get('/', function(req, res, next) {
 router.post('/', async (req, res, next) => {
   try {
     const newStudent = await Student.create(req.body);
-    const newStudentTest = await Test.create({
-      subject: History,
+    await Test.create({
+      subject: 'History',
       grade: 80,
       studentid: newStudent.id
     });
-    res.status(201).json(newStudent, newStudentTest);
+    const newStudentTest = Student.findByPk(newStudent.id, {
+      includes: [{ model: Test }]
+    });
+    res.status(201).json(newStudentTest);
   } catch (error) {
     next(error);
   }
