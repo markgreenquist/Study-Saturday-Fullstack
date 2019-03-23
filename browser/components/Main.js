@@ -48,14 +48,23 @@ export default class Main extends Component {
   }
 
   async addStudent(student) {
-    let newStudents = this.state.students.slice();
-    newStudents.push(student);
-    this.setState({
-      students: newStudents
-    });
-    console.log('student: ', student);
-    await axios.post('/student', student);
+    try {
+      const { data } = await axios.post('/student', student);
+      this.setState({ students: [...this.state.students, data] });
+    } catch (error) {
+      console.error(error);
+    }
   }
+
+  // async addStudent(student) {
+  //   let newStudents = this.state.students.slice();
+  //   newStudents.push(student);
+  //   this.setState({
+  //     students: newStudents
+  //   });
+  //   console.log('student: ', student);
+  //   await axios.post('/student', student);
+  // }
 
   render() {
     console.log('this is the state in main', this.state);
