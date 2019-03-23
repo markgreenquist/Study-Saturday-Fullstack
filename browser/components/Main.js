@@ -9,7 +9,7 @@ export default class Main extends Component {
     super(props);
     this.state = {
       students: [],
-      selectedStudent: {},
+      selectedStudent: {}
     };
 
     this.selectStudent = this.selectStudent.bind(this);
@@ -31,7 +31,7 @@ export default class Main extends Component {
 
   selectStudent(student) {
     return this.setState({
-      selectedStudent: student,
+      selectedStudent: student
     });
   }
 
@@ -54,6 +54,8 @@ export default class Main extends Component {
         {this.state.selectedStudent.id ? (
           <SingleStudent student={this.state.selectedStudent} />
         ) : null}
+        <hr />
+        <button type="submit">Add New Student</button>
       </div>
     );
   }
