@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import StudentList from './StudentList.js';
 import SingleStudent from './SingleStudent.js';
 import NewStudentForm from './NewStudentForm.js';
+import { fetchStudents } from '../store/students';
 
-export default class Main extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      students: [],
       selectedStudent: {},
-      showStudent: false,
+      showStudent: false
     };
 
     this.selectStudent = this.selectStudent.bind(this);
@@ -20,7 +21,7 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-    this.getStudents();
+    this.props.getStudents();
   }
 
   async getStudents() {
@@ -36,7 +37,7 @@ export default class Main extends Component {
 
   selectStudent(student) {
     return this.setState({
-      selectedStudent: student,
+      selectedStudent: student
     });
   }
 
@@ -44,13 +45,13 @@ export default class Main extends Component {
     const { data } = await axios.post('/student', student);
     this.setState({
       students: [...this.state.students, data],
-      showStudent: false,
+      showStudent: false
     });
   }
 
   handleClick(e) {
     return this.setState({
-      showStudent: !this.state.showStudent,
+      showStudent: !this.state.showStudent
     });
   }
 
@@ -71,7 +72,7 @@ export default class Main extends Component {
             </tr>
           </thead>
           <StudentList
-            students={this.state.students}
+            students={this.props.students}
             selectStudent={this.selectStudent}
           />
         </table>
@@ -82,3 +83,16 @@ export default class Main extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  students: state.students
+});
+
+const mapDispatchToProps = dispatch => ({
+  getStudents: () => dispatch(fetchStudents())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main);
