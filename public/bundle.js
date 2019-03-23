@@ -36558,6 +36558,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -36567,40 +36569,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var NewStudentForm = function (_Component) {
   _inherits(NewStudentForm, _Component);
 
-  function NewStudentForm() {
+  function NewStudentForm(props) {
     _classCallCheck(this, NewStudentForm);
 
-    return _possibleConstructorReturn(this, (NewStudentForm.__proto__ || Object.getPrototypeOf(NewStudentForm)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (NewStudentForm.__proto__ || Object.getPrototypeOf(NewStudentForm)).call(this, props));
+
+    _this.state = {
+      firstName: '',
+      lastName: '',
+      email: ''
+    };
+
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
   _createClass(NewStudentForm, [{
-    key: "render",
+    key: 'handleChange',
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var newStudent = alert('A name was submitted: ' + this.state.firstName + ' ' + this.state.lastName);
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: ''
+      });
+    }
+  }, {
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "form",
+        'form',
         { onSubmit: this.handleSubmit },
         _react2.default.createElement(
-          "label",
-          null,
-          "First Name:",
-          _react2.default.createElement("input", { type: "text", name: "firstName" })
+          'label',
+          { htmlFor: 'firstName' },
+          'First Name:',
+          _react2.default.createElement('input', {
+            type: 'text',
+            name: 'firstName',
+            value: this.state.firstName,
+            onChange: this.handleChange
+          })
         ),
         _react2.default.createElement(
-          "label",
-          null,
-          "Last Name:",
-          _react2.default.createElement("input", { type: "text", name: "lastName" })
+          'label',
+          { htmlFor: 'lastName' },
+          'Last Name:',
+          _react2.default.createElement('input', {
+            type: 'text',
+            name: 'lastName',
+            value: this.state.lastName,
+            onChange: this.handleChange
+          })
         ),
         _react2.default.createElement(
-          "label",
-          null,
-          "Email:",
-          _react2.default.createElement("input", { type: "email", name: "email" })
+          'label',
+          { htmlFor: 'email' },
+          'Email:',
+          _react2.default.createElement('input', {
+            type: 'email',
+            name: 'email',
+            value: this.state.email,
+            onChange: this.handleChange
+          })
         ),
         _react2.default.createElement(
-          "button",
-          { type: "submit" },
-          "Submit New Student"
+          'button',
+          { type: 'submit', value: 'Submit' },
+          'Submit New Student'
         )
       );
     }
@@ -36608,6 +36651,39 @@ var NewStudentForm = function (_Component) {
 
   return NewStudentForm;
 }(_react.Component);
+
+//   render() {
+//     return (
+//       <form onSubmit={this.handleSubmit}>
+//         <label htmlFor="firstname">Firstname:</label>
+//         <input
+//           type="text"
+//           name="firstname"
+//           value={this.state.firstname}
+//           onChange={this.handleChange}
+//         />
+//         <label htmlFor="lastname">Lastname:</label>
+//         <input
+//           type="text"
+//           name="lastname"
+//           value={this.state.lastname}
+//           onChange={this.handleChange}
+//         />
+//         <label htmlFor="email">Email:</label>
+//         <input
+//           type="email"
+//           name="email"
+//           value={this.state.email}
+//           onChange={this.handleChange}
+//         />
+//         <button type="submit" value="Submit">
+//           Submit
+//         </button>
+//       </form>
+//     );
+//   }
+// }
+
 
 exports.default = NewStudentForm;
 
